@@ -1,28 +1,31 @@
-﻿// KLASA KANBAN CARD
-function Card(description) {
-  var self = this;
-  
-  this.id = randomString();
-  this.description = description;
-  this.element = createCard();
+﻿var board = {
+  name: 'Tablica Kanban',
+  createColumn: function(column) {
+    this.element.append(column.element);
+    initSortable();
+  },
+  element: $('#board .column-container')
+};
 
-  function createCard() {
-    var card = $('<li class="card"></li>');
-    var cardDeleteBtn = $('<button class="btn-delete">x</button>');
-    var cardDescription = $('<p class="card-description"></p>');
-    
-    cardDeleteBtn.click(function(){
-      self.removeCard();
-    });
-    
-    card.append(cardDeleteBtn);
-    cardDescription.text(self.description);
-    card.append(cardDescription)
-    return card;
+$('.create-column')
+    .click(function() {
+        var columnName = prompt('Wpisz nazwę kolumny');
+        $.ajax({
+        url: baseUrl + '/column',
+        method: 'POST',
+        data: {
+              name: columnName
+        },
+        success: function(response){
+          var column = new Column(response.id, columnName);
+          board.createColumn(column);
+            }
+        });
+});
+  
+function initSortable() {
+    $('.card-list').sortable({
+      connectWith: '.card-list',
+      placeholder: 'card-placeholder'
+    }).disableSelection();
   }
-}
-Card.prototype = {
-  removeCard: function() {
-    this.element.remove();
-  }
-}
