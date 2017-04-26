@@ -5,7 +5,7 @@
 
     this.id = id;
     this.name = name || 'Nie podano nazwy';
-    this.description = description;
+    this.description = name;
     this.element = createCard();
 
     function createCard() {

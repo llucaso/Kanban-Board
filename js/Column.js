@@ -1,4 +1,4 @@
-﻿function Column(name) {                                 //funkcja konstruujaca
+﻿function Column(id, name) {                                 //funkcja konstruujaca
   var self = this;
   
   this.id = id;
@@ -21,7 +21,9 @@
     columnAddCard.click(function(event) {
       var cardName = prompt("Wpisz nazwę karty");
       event.preventDefault();
+      if (cardName) {
         $.ajax({
+      
     url: baseUrl + '/card',
     method: 'POST',
     data: {
@@ -33,6 +35,7 @@
         self.createCard(card);
     }
     });
+      }
 });
       
       // KONSTRUOWANIE ELEMENTU KOLUMNY

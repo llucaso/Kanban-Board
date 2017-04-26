@@ -10,6 +10,7 @@
 $('.create-column')
     .click(function() {
         var columnName = prompt('Wpisz nazwę kolumny');
+      if (columnName) {
         $.ajax({
         url: baseUrl + '/column',
         method: 'POST',
@@ -21,6 +22,7 @@ $('.create-column')
           board.createColumn(column);
             }
         });
+      }
 });
   
 function initSortable() {
